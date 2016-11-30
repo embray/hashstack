@@ -7,6 +7,15 @@ defaults:
   # /share/doc/gettext/examples/installpaths contains absolute path
   relocatable: false
 
+build_stages:
+  - when: platform == 'Cygwin'
+    name: patch
+    before: configure
+    files: [cygwin.patch]
+    handler: bash
+    bash: |
+      patch -up1 < _hashdist/cygwin.patch
+
 sources:
 - url: http://ftp.gnu.org/pub/gnu/gettext/gettext-0.19.1.tar.gz
   key: tar.gz:fb2hdwk335p6wsdcmjd73rjqmyhd2kig
