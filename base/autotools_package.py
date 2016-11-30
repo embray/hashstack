@@ -17,7 +17,7 @@ def configure(ctx, stage_args):
         - name: configure
           extra: ['--enable-foo', '--with-zlib=${ZLIB_DIR}']
           set_env_flags: true # default
-          env_flags_append: {'LDFLAGS', '-Wl,-rpath=${ARTIFACT}/lib'} # only meaningful if set_env_flags: true
+          append: {'LDFLAGS': '-Wl,-rpath=${ARTIFACT}/lib'}  # only meaningful if set_env_flags: true
           configure_path: . # default
           global_flags: false # default
 
