@@ -1,0 +1,12 @@
+--- a/config.guess	2016-11-30 15:12:41.668793100 +0100
++++ b/config.guess	2016-11-30 15:13:49.883718600 +0100
+@@ -797,6 +797,9 @@
+     amd64:CYGWIN*:*:*)
+ 	echo x86_64-unknown-cygwin
+ 	exit ;;
++    x86_64:CYGWIN*:*:*)
++	echo x86_64-unknown-cygwin
++	exit ;;
+     p*:CYGWIN*:*)
+ 	echo powerpcle-unknown-cygwin
+ 	exit ;;
