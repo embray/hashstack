@@ -1,0 +1,132 @@
+diff -ru a/configure b/configure
+--- a/configure	2015-08-17 12:49:50.000000000 +0200
++++ b/configure	2016-11-30 13:48:09.452097000 +0100
+@@ -625,6 +625,8 @@
+ ON_LINUX_TRUE
+ ON_ANDROID_FALSE
+ ON_ANDROID_TRUE
++ON_CYGWIN_FALSE
++ON_CYGWIN_TRUE
+ ON_MINGW_FALSE
+ ON_MINGW_TRUE
+ BUILD_TIPC_FALSE
+@@ -17856,6 +17858,7 @@
+         if test "x$enable_static" = "xyes"; then
+             as_fn_error $? "Building static libraries is not supported under Cygwin" "$LINENO" 5
+         fi
++        libzmq_on_cygwin="yes"
+         ;;
+     *)
+         as_fn_error $? "unsupported system: ${host_os}." "$LINENO" 5
+@@ -19923,6 +19926,14 @@
+   ON_MINGW_FALSE=
+ fi
+ 
++ if test "x$libzmq_on_cygwin" = "xyes"; then
++  ON_CYGWIN_TRUE=
++  ON_CYGWIN_FALSE='#'
++else
++  ON_CYGWIN_TRUE='#'
++  ON_CYGWIN_FALSE=
++fi
++
+  if test "x$libzmq_on_android" = "xyes"; then
+   ON_ANDROID_TRUE=
+   ON_ANDROID_FALSE='#'
+@@ -20441,6 +20452,10 @@
+   as_fn_error $? "conditional \"ON_MINGW\" was never defined.
+ Usually this means the macro was only invoked conditionally." "$LINENO" 5
+ fi
++if test -z "${ON_CYGWIN_TRUE}" && test -z "${ON_CYGWIN_FALSE}"; then
++  as_fn_error $? "conditional \"ON_CYGWIN\" was never defined.
++Usually this means the macro was only invoked conditionally." "$LINENO" 5
++fi
+ if test -z "${ON_ANDROID_TRUE}" && test -z "${ON_ANDROID_FALSE}"; then
+   as_fn_error $? "conditional \"ON_ANDROID\" was never defined.
+ Usually this means the macro was only invoked conditionally." "$LINENO" 5
+diff -ru a/configure.ac b/configure.ac
+--- a/configure.ac	2015-06-15 11:43:08.000000000 +0200
++++ b/configure.ac	2016-11-30 13:48:09.468608000 +0100
+@@ -272,6 +272,7 @@
+         if test "x$enable_static" = "xyes"; then
+             AC_MSG_ERROR([Building static libraries is not supported under Cygwin])
+         fi
++        libzmq_on_cygwin="yes"
+         ;;
+     *)
+         AC_MSG_ERROR([unsupported system: ${host_os}.])
+@@ -472,6 +473,7 @@
+ 
+ AM_CONDITIONAL(BUILD_TIPC, test "x$libzmq_tipc_support" = "xyes")
+ AM_CONDITIONAL(ON_MINGW, test "x$libzmq_on_mingw32" = "xyes")
++AM_CONDITIONAL(ON_CYGWIN, test "x$libzmq_on_cygwin" = "xyes")
+ AM_CONDITIONAL(ON_ANDROID, test "x$libzmq_on_android" = "xyes")
+ AM_CONDITIONAL(ON_LINUX, test "x$libzmq_on_linux" = "xyes")
+ 
+diff -ru a/Makefile.am b/Makefile.am
+--- a/Makefile.am	2015-08-17 12:48:42.000000000 +0200
++++ b/Makefile.am	2016-11-30 13:48:09.474611900 +0100
+@@ -208,6 +208,13 @@
+ 	-version-info @LTVER@ \
+ 	@LIBZMQ_EXTRA_LDFLAGS@
+ else
++if ON_CYGWIN
++libzmq_la_LDFLAGS = \
++	-no-undefined \
++	-avoid-version \
++	-version-info @LTVER@ \
++	@LIBZMQ_EXTRA_LDFLAGS@
++else
+ if ON_ANDROID
+ libzmq_la_LDFLAGS = \
+ 	-avoid-version \
+@@ -227,6 +234,7 @@
+ endif
+ endif
+ endif
++endif
+ 
+ libzmq_la_CPPFLAGS =
+ libzmq_la_CXXFLAGS = @LIBZMQ_EXTRA_CXXFLAGS@
+diff -ru a/Makefile.in b/Makefile.in
+--- a/Makefile.in	2015-08-17 12:49:50.000000000 +0200
++++ b/Makefile.in	2016-11-30 13:48:09.485132500 +0100
+@@ -1038,20 +1038,26 @@
+ 	src/zmq.cpp \
+ 	src/zmq_utils.cpp
+ 
+-@ON_ANDROID_FALSE@@ON_LINUX_FALSE@@ON_MINGW_FALSE@libzmq_la_LDFLAGS = \
+-@ON_ANDROID_FALSE@@ON_LINUX_FALSE@@ON_MINGW_FALSE@	-version-info @LTVER@ \
+-@ON_ANDROID_FALSE@@ON_LINUX_FALSE@@ON_MINGW_FALSE@	@LIBZMQ_EXTRA_LDFLAGS@ \
+-@ON_ANDROID_FALSE@@ON_LINUX_FALSE@@ON_MINGW_FALSE@	-Wl
++@ON_ANDROID_FALSE@@ON_CYGWIN_FALSE@@ON_LINUX_FALSE@@ON_MINGW_FALSE@libzmq_la_LDFLAGS = \
++@ON_ANDROID_FALSE@@ON_CYGWIN_FALSE@@ON_LINUX_FALSE@@ON_MINGW_FALSE@	-version-info @LTVER@ \
++@ON_ANDROID_FALSE@@ON_CYGWIN_FALSE@@ON_LINUX_FALSE@@ON_MINGW_FALSE@	@LIBZMQ_EXTRA_LDFLAGS@ \
++@ON_ANDROID_FALSE@@ON_CYGWIN_FALSE@@ON_LINUX_FALSE@@ON_MINGW_FALSE@	-Wl
+ 
+-@ON_ANDROID_FALSE@@ON_LINUX_TRUE@@ON_MINGW_FALSE@libzmq_la_LDFLAGS = \
+-@ON_ANDROID_FALSE@@ON_LINUX_TRUE@@ON_MINGW_FALSE@	-version-info @LTVER@ \
+-@ON_ANDROID_FALSE@@ON_LINUX_TRUE@@ON_MINGW_FALSE@	@LIBZMQ_EXTRA_LDFLAGS@ \
+-@ON_ANDROID_FALSE@@ON_LINUX_TRUE@@ON_MINGW_FALSE@	-Wl,--version-script=$(srcdir)/src/libzmq.vers
++@ON_ANDROID_FALSE@@ON_CYGWIN_FALSE@@ON_LINUX_TRUE@@ON_MINGW_FALSE@libzmq_la_LDFLAGS = \
++@ON_ANDROID_FALSE@@ON_CYGWIN_FALSE@@ON_LINUX_TRUE@@ON_MINGW_FALSE@	-version-info @LTVER@ \
++@ON_ANDROID_FALSE@@ON_CYGWIN_FALSE@@ON_LINUX_TRUE@@ON_MINGW_FALSE@	@LIBZMQ_EXTRA_LDFLAGS@ \
++@ON_ANDROID_FALSE@@ON_CYGWIN_FALSE@@ON_LINUX_TRUE@@ON_MINGW_FALSE@	-Wl,--version-script=$(srcdir)/src/libzmq.vers
+ 
+-@ON_ANDROID_TRUE@@ON_MINGW_FALSE@libzmq_la_LDFLAGS = \
+-@ON_ANDROID_TRUE@@ON_MINGW_FALSE@	-avoid-version \
+-@ON_ANDROID_TRUE@@ON_MINGW_FALSE@	-version-info @LTVER@ \
+-@ON_ANDROID_TRUE@@ON_MINGW_FALSE@	@LIBZMQ_EXTRA_LDFLAGS@
++@ON_ANDROID_TRUE@@ON_CYGWIN_FALSE@@ON_MINGW_FALSE@libzmq_la_LDFLAGS = \
++@ON_ANDROID_TRUE@@ON_CYGWIN_FALSE@@ON_MINGW_FALSE@	-avoid-version \
++@ON_ANDROID_TRUE@@ON_CYGWIN_FALSE@@ON_MINGW_FALSE@	-version-info @LTVER@ \
++@ON_ANDROID_TRUE@@ON_CYGWIN_FALSE@@ON_MINGW_FALSE@	@LIBZMQ_EXTRA_LDFLAGS@
++
++@ON_CYGWIN_TRUE@@ON_MINGW_FALSE@libzmq_la_LDFLAGS = \
++@ON_CYGWIN_TRUE@@ON_MINGW_FALSE@	-no-undefined \
++@ON_CYGWIN_TRUE@@ON_MINGW_FALSE@	-avoid-version \
++@ON_CYGWIN_TRUE@@ON_MINGW_FALSE@	-version-info @LTVER@ \
++@ON_CYGWIN_TRUE@@ON_MINGW_FALSE@	@LIBZMQ_EXTRA_LDFLAGS@
+ 
+ @ON_MINGW_TRUE@libzmq_la_LDFLAGS = \
+ @ON_MINGW_TRUE@	-no-undefined \
