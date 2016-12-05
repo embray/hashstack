@@ -52,15 +52,15 @@ build_stages:
       - '2.7/2.7.3-no-libm.patch'
     handler: bash
     bash: |
-      patch -p0 < _hashdist/2.5.2-ctypes-util-find_library.patch
-      patch -p0 < _hashdist/2.5.2-tkinter-x11.patch
-      patch -p0 < _hashdist/2.6.5-FD_SETSIZE.patch
-      patch -p0 < _hashdist/2.6.5-export-PySignal_SetWakeupFd.patch
-      patch -p0 < _hashdist/2.6.5-ncurses-abi6.patch
-      patch -p0 < _hashdist/2.7.3-dbm.patch
-      patch -p0 < _hashdist/2.7.3-dylib.patch
-      patch -p0 < _hashdist/2.7.3-getpath-exe-extension.patch
-      patch -p0 < _hashdist/2.7.3-no-libm.patch
+      patch -p0 < _hashdist/2.7/2.5.2-ctypes-util-find_library.patch
+      patch -p0 < _hashdist/2.7/2.5.2-tkinter-x11.patch
+      patch -p0 < _hashdist/2.7/2.6.5-FD_SETSIZE.patch
+      patch -p0 < _hashdist/2.7/2.6.5-export-PySignal_SetWakeupFd.patch
+      patch -p0 < _hashdist/2.7/2.6.5-ncurses-abi6.patch
+      patch -p0 < _hashdist/2.7/2.7.3-dbm.patch
+      patch -p0 < _hashdist/2.7/2.7.3-dylib.patch
+      patch -p0 < _hashdist/2.7/2.7.3-getpath-exe-extension.patch
+      patch -p0 < _hashdist/2.7/2.7.3-no-libm.patch
 
   - when: platform == 'Cygwin' and pyver == '3.2'
     name: cygwin-patch
@@ -82,19 +82,19 @@ build_stages:
       - '3.2/3.2.6-tkinter-x11.patch'
     handler: bash
     bash: |
-      patch -p0 < _hashdist/2.6.5-FD_SETSIZE.patch
-      patch -p0 < _hashdist/2.6.5-ncurses-abi6.patch
-      patch -p0 < _hashdist/2.7.3-dylib.patch
-      patch -p0 < _hashdist/3.2.6-ctypes-util-find_library.patch
-      patch -p0 < _hashdist/3.2.6-dbm.patch
-      patch -p0 < _hashdist/3.2.6-export-PyNode_SizeOf.patch
-      patch -p0 < _hashdist/3.2.6-export-PySignal_SetWakeupFd.patch
-      patch -p0 < _hashdist/3.2.6-getpath-exe-extension.patch
-      patch -p0 < _hashdist/3.2.6-issue13756.patch
-      patch -p0 < _hashdist/3.2.6-no-enable-new-dtags.patch
-      patch -p0 < _hashdist/3.2.6-no-libm.patch
-      patch -p0 < _hashdist/3.2.6-no-native-tls.patch
-      patch -p0 < _hashdist/3.2.6-tkinter-x11.patch
+      patch -p0 < _hashdist/3.2/2.6.5-FD_SETSIZE.patch
+      patch -p0 < _hashdist/3.2/2.6.5-ncurses-abi6.patch
+      patch -p0 < _hashdist/3.2/2.7.3-dylib.patch
+      patch -p0 < _hashdist/3.2/3.2.6-ctypes-util-find_library.patch
+      patch -p0 < _hashdist/3.2/3.2.6-dbm.patch
+      patch -p0 < _hashdist/3.2/3.2.6-export-PyNode_SizeOf.patch
+      patch -p0 < _hashdist/3.2/3.2.6-export-PySignal_SetWakeupFd.patch
+      patch -p0 < _hashdist/3.2/3.2.6-getpath-exe-extension.patch
+      patch -p0 < _hashdist/3.2/3.2.6-issue13756.patch
+      patch -p0 < _hashdist/3.2/3.2.6-no-enable-new-dtags.patch
+      patch -p0 < _hashdist/3.2/3.2.6-no-libm.patch
+      patch -p0 < _hashdist/3.2/3.2.6-no-native-tls.patch
+      patch -p0 < _hashdist/3.2/3.2.6-tkinter-x11.patch
 
   - when: platform == 'Cygwin' and pyver == '3.3'
     name: cygwin-patch
@@ -117,20 +117,20 @@ build_stages:
       - '3.3/3.3.6-tkinter-x11.patch'
     handler: bash
     bash: |
-      patch -p0 < _hashdist/2.6.5-FD_SETSIZE.patch
-      patch -p0 < _hashdist/2.6.5-ncurses-abi6.patch
-      patch -p0 < _hashdist/2.7.3-dylib.patch
-      patch -p0 < _hashdist/3.2.6-ctypes-util-find_library.patch
-      patch -p0 < _hashdist/3.2.6-export-PyNode_SizeOf.patch
-      patch -p0 < _hashdist/3.2.6-export-PySignal_SetWakeupFd.patch
-      patch -p0 < _hashdist/3.2.6-getpath-exe-extension.patch
-      patch -p0 < _hashdist/3.2.6-issue13756.patch
-      patch -p0 < _hashdist/3.2.6-no-enable-new-dtags.patch
-      patch -p0 < _hashdist/3.2.6-no-native-tls.patch
-      patch -p0 < _hashdist/3.3.6-dbm.patch
-      patch -p0 < _hashdist/3.3.6-no-libm.patch
-      patch -p0 < _hashdist/3.3.6-struct_siginfo_si_band.patch
-      patch -p0 < _hashdist/3.3.6-tkinter-x11.patch
+      patch -p0 < _hashdist/3.3/2.6.5-FD_SETSIZE.patch
+      patch -p0 < _hashdist/3.3/2.6.5-ncurses-abi6.patch
+      patch -p0 < _hashdist/3.3/2.7.3-dylib.patch
+      patch -p0 < _hashdist/3.3/3.2.6-ctypes-util-find_library.patch
+      patch -p0 < _hashdist/3.3/3.2.6-export-PyNode_SizeOf.patch
+      patch -p0 < _hashdist/3.3/3.2.6-export-PySignal_SetWakeupFd.patch
+      patch -p0 < _hashdist/3.3/3.2.6-getpath-exe-extension.patch
+      patch -p0 < _hashdist/3.3/3.2.6-issue13756.patch
+      patch -p0 < _hashdist/3.3/3.2.6-no-enable-new-dtags.patch
+      patch -p0 < _hashdist/3.3/3.2.6-no-native-tls.patch
+      patch -p0 < _hashdist/3.3/3.3.6-dbm.patch
+      patch -p0 < _hashdist/3.3/3.3.6-no-libm.patch
+      patch -p0 < _hashdist/3.3/3.3.6-struct_siginfo_si_band.patch
+      patch -p0 < _hashdist/3.3/3.3.6-tkinter-x11.patch
 
   - when: platform == 'Cygwin' and pyver == '3.4'
     name: cygwin-patch
@@ -153,20 +153,20 @@ build_stages:
       - '3.4/3.4.5-struct.patch'
     handler: bash
     bash: |
-      patch -p0 < _hashdist/2.6.5-FD_SETSIZE.patch
-      patch -p0 < _hashdist/2.6.5-ncurses-abi6.patch
-      patch -p0 < _hashdist/2.7.3-dylib.patch
-      patch -p0 < _hashdist/3.2.6-ctypes-util-find_library.patch
-      patch -p0 < _hashdist/3.2.6-export-PySignal_SetWakeupFd.patch
-      patch -p0 < _hashdist/3.2.6-getpath-exe-extension.patch
-      patch -p0 < _hashdist/3.2.6-no-enable-new-dtags.patch
-      patch -p0 < _hashdist/3.2.6-no-native-tls.patch
-      patch -p0 < _hashdist/3.3.6-dbm.patch
-      patch -p0 < _hashdist/3.3.6-no-libm.patch
-      patch -p0 < _hashdist/3.3.6-struct_siginfo_si_band.patch
-      patch -p0 < _hashdist/3.3.6-tkinter-x11.patch
-      patch -p0 < _hashdist/3.4.5-issue13756.patch
-      patch -p0 < _hashdist/3.4.5-struct.patch
+      patch -p0 < _hashdist/3.4/2.6.5-FD_SETSIZE.patch
+      patch -p0 < _hashdist/3.4/2.6.5-ncurses-abi6.patch
+      patch -p0 < _hashdist/3.4/2.7.3-dylib.patch
+      patch -p0 < _hashdist/3.4/3.2.6-ctypes-util-find_library.patch
+      patch -p0 < _hashdist/3.4/3.2.6-export-PySignal_SetWakeupFd.patch
+      patch -p0 < _hashdist/3.4/3.2.6-getpath-exe-extension.patch
+      patch -p0 < _hashdist/3.4/3.2.6-no-enable-new-dtags.patch
+      patch -p0 < _hashdist/3.4/3.2.6-no-native-tls.patch
+      patch -p0 < _hashdist/3.4/3.3.6-dbm.patch
+      patch -p0 < _hashdist/3.4/3.3.6-no-libm.patch
+      patch -p0 < _hashdist/3.4/3.3.6-struct_siginfo_si_band.patch
+      patch -p0 < _hashdist/3.4/3.3.6-tkinter-x11.patch
+      patch -p0 < _hashdist/3.4/3.4.5-issue13756.patch
+      patch -p0 < _hashdist/3.4/3.4.5-struct.patch
 
   - when: platform == 'Cygwin' and pyver == '3.5'
     name: cygwin-patch
@@ -189,20 +189,20 @@ build_stages:
       - '3.5/3.5.2-struct_siginfo_si_band.patch'
     handler: bash
     bash: |
-      patch -p0 < _hashdist/2.6.5-FD_SETSIZE.patch
-      patch -p0 < _hashdist/2.6.5-ncurses-abi6.patch
-      patch -p0 < _hashdist/2.7.3-dylib.patch
-      patch -p0 < _hashdist/3.2.6-ctypes-util-find_library.patch
-      patch -p0 < _hashdist/3.2.6-export-PySignal_SetWakeupFd.patch
-      patch -p0 < _hashdist/3.2.6-getpath-exe-extension.patch
-      patch -p0 < _hashdist/3.2.6-no-enable-new-dtags.patch
-      patch -p0 < _hashdist/3.2.6-no-native-tls.patch
-      patch -p0 < _hashdist/3.3.6-dbm.patch
-      patch -p0 < _hashdist/3.3.6-tkinter-x11.patch
-      patch -p0 < _hashdist/3.4.5-issue13756.patch
-      patch -p0 < _hashdist/3.4.5-struct.patch
-      patch -p0 < _hashdist/3.5.2-no-libm.patch
-      patch -p0 < _hashdist/3.5.2-struct_siginfo_si_band.patch
+      patch -p0 < _hashdist/3.5/2.6.5-FD_SETSIZE.patch
+      patch -p0 < _hashdist/3.5/2.6.5-ncurses-abi6.patch
+      patch -p0 < _hashdist/3.5/2.7.3-dylib.patch
+      patch -p0 < _hashdist/3.5/3.2.6-ctypes-util-find_library.patch
+      patch -p0 < _hashdist/3.5/3.2.6-export-PySignal_SetWakeupFd.patch
+      patch -p0 < _hashdist/3.5/3.2.6-getpath-exe-extension.patch
+      patch -p0 < _hashdist/3.5/3.2.6-no-enable-new-dtags.patch
+      patch -p0 < _hashdist/3.5/3.2.6-no-native-tls.patch
+      patch -p0 < _hashdist/3.5/3.3.6-dbm.patch
+      patch -p0 < _hashdist/3.5/3.3.6-tkinter-x11.patch
+      patch -p0 < _hashdist/3.5/3.4.5-issue13756.patch
+      patch -p0 < _hashdist/3.5/3.4.5-struct.patch
+      patch -p0 < _hashdist/3.5/3.5.2-no-libm.patch
+      patch -p0 < _hashdist/3.5/3.5.2-struct_siginfo_si_band.patch
 
   - when: link == 'shared'
     name: configure
