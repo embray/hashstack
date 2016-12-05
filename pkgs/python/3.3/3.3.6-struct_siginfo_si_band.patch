@@ -1,0 +1,66 @@
+diff --git Modules/signalmodule.c Modules/signalmodule.c
+index 704c9f5..a236bb0 100644
+--- Modules/signalmodule.c
++++ Modules/signalmodule.c
+@@ -742,7 +742,11 @@ fill_siginfo(siginfo_t *si)
+     PyStructSequence_SET_ITEM(result, 4, _PyLong_FromUid(si->si_uid));
+     PyStructSequence_SET_ITEM(result, 5,
+                                 PyLong_FromLong((long)(si->si_status)));
++#ifdef HAVE_SIGINFO_T_SI_BAND
+     PyStructSequence_SET_ITEM(result, 6, PyLong_FromLong(si->si_band));
++#else
++    PyStructSequence_SET_ITEM(result, 6, PyLong_FromLong(0L));
++#endif
+     if (PyErr_Occurred()) {
+         Py_DECREF(result);
+         return NULL;
+diff --git configure configure
+index 6dde687..765e796 100755
+--- configure
++++ configure
+@@ -12100,6 +12100,18 @@ esac
+ fi
+ 
+ 
++# Issue #21085: In Cygwin, siginfo_t does not have si_band field.
++ac_fn_c_check_member "$LINENO" "siginfo_t" "si_band" "ac_cv_member_siginfo_t_si_band" "#include <signal.h>
++"
++if test "x$ac_cv_member_siginfo_t_si_band" = xyes; then :
++
++cat >>confdefs.h <<_ACEOF
++#define HAVE_SIGINFO_T_SI_BAND 1
++_ACEOF
++
++
++fi
++
+ 
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking for time.h that defines altzone" >&5
+ $as_echo_n "checking for time.h that defines altzone... " >&6; }
+diff --git configure.ac configure.ac
+index 760b37f..1825a38 100644
+--- configure.ac
++++ configure.ac
+@@ -3317,6 +3317,8 @@ AC_CHECK_MEMBERS([struct stat.st_flags])
+ AC_CHECK_MEMBERS([struct stat.st_gen])
+ AC_CHECK_MEMBERS([struct stat.st_birthtime])
+ AC_STRUCT_ST_BLOCKS
++# Issue #21085: In Cygwin, siginfo_t does not have si_band field.
++AC_CHECK_MEMBERS([siginfo_t.si_band], [], [], [[#include <signal.h>]])
+ 
+ AC_MSG_CHECKING(for time.h that defines altzone)
+ AC_CACHE_VAL(ac_cv_header_time_altzone,[
+diff --git pyconfig.h.in pyconfig.h.in
+index 77e98e4..313ff6d 100644
+--- pyconfig.h.in
++++ pyconfig.h.in
+@@ -795,6 +795,9 @@
+ /* Define to 1 if you have the `sigaltstack' function. */
+ #undef HAVE_SIGALTSTACK
+ 
++/* Define to 1 if `si_band' is a member of `siginfo_t'. */
++#undef HAVE_SIGINFO_T_SI_BAND
++
+ /* Define to 1 if you have the `siginterrupt' function. */
+ #undef HAVE_SIGINTERRUPT
+ 
