@@ -1,0 +1,13 @@
+diff --git setup.py setup.py
+index e34994d..3373dd6 100644
+--- setup.py
++++ setup.py
+@@ -540,7 +540,7 @@ class PyBuildExt(build_ext):
+ 
+         # Check for MacOS X, which doesn't need libm.a at all
+         math_libs = ['m']
+-        if host_platform == 'darwin':
++        if host_platform in ['darwin', 'cygwin']:
+             math_libs = []
+ 
+         # XXX Omitted modules: gl, pure, dl, SGI-specific modules

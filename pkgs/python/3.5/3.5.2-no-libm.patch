@@ -1,0 +1,15 @@
+diff --git setup.py setup.py
+index 34742c7..c0b028c 100644
+--- setup.py
++++ setup.py
+@@ -480,8 +480,8 @@ class PyBuildExt(build_ext):
+             os.unlink(tmpfile)
+ 
+     def detect_math_libs(self):
+-        # Check for MacOS X, which doesn't need libm.a at all
+-        if host_platform == 'darwin':
++        # Check for MacOS X or Cygwin, which don't need libm.a at all
++        if host_platform in ['darwin', 'cygwin']:
+             return []
+         else:
+             return ['m']
