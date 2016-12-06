@@ -1,0 +1,24 @@
+diff -ruN a/src/Makefile.am b/src/Makefile.am
+--- a/src/Makefile.am	2013-05-21 13:17:36.000000000 +0200
++++ b/src/Makefile.am	2016-12-06 17:31:14.234051600 +0100
+@@ -65,7 +65,7 @@
+  update.c\
+  version.c
+ 
+-libgdbm_la_LDFLAGS = -version-info $(VI_CURRENT):$(VI_REVISION):$(VI_AGE)
++libgdbm_la_LDFLAGS = -no-undefined -version-info $(VI_CURRENT):$(VI_REVISION):$(VI_AGE)
+ 
+ noinst_LIBRARIES = libgdbmapp.a
+ 
+diff -ruN a/src/Makefile.in b/src/Makefile.in
+--- a/src/Makefile.in	2013-12-25 16:58:27.000000000 +0100
++++ b/src/Makefile.in	2016-12-06 17:31:28.344073600 +0100
+@@ -461,7 +461,7 @@
+  update.c\
+  version.c
+ 
+-libgdbm_la_LDFLAGS = -version-info $(VI_CURRENT):$(VI_REVISION):$(VI_AGE)
++libgdbm_la_LDFLAGS = -no-undefined -version-info $(VI_CURRENT):$(VI_REVISION):$(VI_AGE)
+ noinst_LIBRARIES = libgdbmapp.a
+ libgdbmapp_a_SOURCES = \
+  err.c\
